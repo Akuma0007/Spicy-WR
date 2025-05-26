@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Would You Rather - Spicy Edition</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff007f, #8e2de2);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 30px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+    button {
+      font-size: 18px;
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .option {
+      background: white;
+      color: hotpink;
+      font-weight: bold;
+    }
+    .option:hover {
+      background: deeppink;
+      color: white;
+    }
+    .share-btn {
+      background-color: dodgerblue;
+      color: white;
+    }
+    .next-btn {
+      background-color: limegreen;
+      color: black;
+      font-weight: bold;
+    }
+    .result {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+    .music-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: black;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body onload="initializeQuestion()">
+  <button class="music-toggle" onclick="toggleMusic()">&#9835;</button>
+  <div class="container">
+    <h1 id="question">Would you rather...</h1>
+    <button class="option" onclick="vote('A')">Option A</button>
+    <button class="option" onclick="vote('B')">Option B</button>
+    <div class="result" id="result"></div>
+    <button class="share-btn" onclick="shareQuestion()">SHARE THIS MADNESS</button>
+    <button class="next-btn" onclick="newQuestion()">HIT ME AGAIN!</button>
+  </div>
+  <audio id="bg-music" src="tec.mp3" autoplay loop></audio>
+  <audio id="click-sound" src="fat.mp3"></audio>  <script>
+    const questions = [
+      "Would you rather call your teacher 'Daddy' in front of class or send your crush 'I want you' by accident?",
+      "Would you rather accidentally send nudes to your boss or post them on your story for 10 seconds?",
+      "Would you rather moan in a serious Zoom meeting or loudly fart in a silent classroom?",
+      "Would you rather get caught watching spicy content or accidentally AirDrop it in public?",
+      "Would you rather walk into your parents romm while their love time or have them walk in on yours?",
+      "Would you rather date someone 15 years older or someone 10 years younger?",
+      "Would you rather scream your ex’s name during sex or your partner’s sibling’s name?",
+      "Would you rather be celibate for 5 years or have the worst sex ever for 1 year straight?",
+      "Would you rather be famous for a scandal or never be remembered at all?",
+      "Would you rather your parents read your full search history or your DMs?",
+      "Would you rather have sex in public once or never have it again?",
+      "Would you rather lose your ability to speak or only speak the truth, always?",
+      "Would you rather drunk text your boss or your ex at 2 AM?",
+      "Would you rather wear your ex’s underwear for a week or go commando at a wedding?",
+      "Would you rather sext the wrong person or accidentally send a screenshot of them to them?",
+      "Would you rather get a hickey at a job interview or fart on a date?",
+      "Would you rather pee your pants at a party or vomit in front of your crush?",
+      "Would you rather eat something off the floor or kiss your ex one more time?",
+      "Would you rather never watch anything spicy again or lose your favorite snack forever?",
+      "Would you rather be stuck in a room with your ex or your enemy for 24 hours?",
+      "Would you rather say everything you think out loud or never speak again?",
+      "Would you rather be caught making out in a library or skinny dipping in a public pool?"
+    ];
+    let currentQuestion = 0;
+    let hasVoted = false;
+
+    function initializeQuestion() {
+      document.getElementById('question').textContent = questions[currentQuestion];
+    }
+
+    function playSound() {
+      document.getElementById('click-sound').play();
+    }
+
+    function vote(option) {
+      if (hasVoted) return;
+      playSound();
+      hasVoted = true;
+      let percentA = Math.floor(Math.random() * 41) + 30; // 30 to 70%
+      let percentB = 100 - percentA;
+      const result = option === 'A'
+        ? `A - ${percentA}% | B - ${percentB}%`
+        : `A - ${percentB}% | B - ${percentA}%`;
+      document.getElementById('result').textContent = result;
+    }
+
+    function newQuestion() {
+      playSound();
+      hasVoted = false;
+      currentQuestion = (currentQuestion + 1) % questions.length;
+      document.getElementById('question').textContent = questions[currentQuestion];
+      document.getElementById('result').textContent = '';
+    }
+
+    function shareQuestion() {
+      const text = encodeURIComponent(document.getElementById('question').textContent);
+      const url = `https://twitter.com/intent/tweet?text=${text}`;
+      window.open(url, '_blank');
+    }
+
+    const music = document.getElementById("bg-music");
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+  </script></body>
+</html>
